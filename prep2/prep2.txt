@@ -21,6 +21,6 @@ A := \select_{length > '145'} Movies;
      For each, report the character and corresponding movie title,
      in that order.
 -------------------------------------------------------------------------------
-\project_{character, title} (\select_{director = Kubrick} (Movies \natural_join Roles));
+\project_{character, title} (\select_{director = 'Kubrick'} (Movies \natural_join Roles));
 
 ===============================================================================
