@@ -22,7 +22,7 @@ A := \select_{length > '145'} Movies;
      in that order.
 -------------------------------------------------------------------------------
 B := Movies \natural_join Roles;
-C := \select_{director = 'Kubrick'}
-\project{character, title} C
+C := \select_{director = 'Kubrick'};
+\project{character, title} C;
 
 ===============================================================================
