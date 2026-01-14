@@ -13,7 +13,7 @@
 ===============================================================================
 [Q3] Write a query to report the title of all movies longer than 145 minutes.
 -------------------------------------------------------------------------------
-A = \select_{length > 145} Movies;
+A := \select_{length > '145'} Movies;
 \project_{title} A;
 
 ===============================================================================
@@ -21,8 +21,8 @@ A = \select_{length > 145} Movies;
      For each, report the character and corresponding movie title,
      in that order.
 -------------------------------------------------------------------------------
-B = Movies \natural_join Roles;
-C = \select_{director = 'Kubrick'}
+B := Movies \natural_join Roles;
+C := \select_{director = 'Kubrick'}
 \project{character, title} C
 
 ===============================================================================
