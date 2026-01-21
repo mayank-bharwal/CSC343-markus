@@ -17,7 +17,7 @@
 
 ===============================================================================
 [Q4] Write a query to report the name and salary of every manager.
-\project_{name, salary} (employee \natural_join_{employee.eid = manages.manager} manages);
+\project_{name, salary} (\select_{eid=manages.manager} employee);
 
 ===============================================================================
 [Q5] Write a query to report the name, eid and salary of every employee who
