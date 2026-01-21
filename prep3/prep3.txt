@@ -23,20 +23,23 @@
 [Q5] Write a query to report the name, eid and salary of every employee who
      works in the department whose name is Widgets.
 -------------------------------------------------------------------------------
-\project_{name, eid, salary} (employee \theta_join_{employee.dept = department.did} (\select_{name='Widgets'} department));
+Tmp(dept, dept_name, division) := \select_{name='Widgets'} department; 
+\project_{employee.name, eid, salary} (employee \theta_join_{employee.dept = Tmp.dept} Tmp);
 
 ===============================================================================
 [Q6] Write a query to report the name and eid of every employee who manages
      someone who has recorded sales over 50 on a single day.
 -------------------------------------------------------------------------------
-\project_{name, eid} (employee \natural_join_{employee.eid = manages.manager} (manages \natural_join_{manages.junior = sales.eid} (\select_{amount > 50} sales)));
+S(eid, day, amount) := \select_{amount > 50} sales; 
+M(manager, junior) := manages \natural_join S; 
+\project_{name, eid} (employee \natural_join M);
 
 ===============================================================================
 [Q7] Write a query to report the eid of everyone who has had a day with sales
      valued at over 90, but has never had a day with sales valued at over 100.
 -------------------------------------------------------------------------------
 S1 := \project_{eid} (\select_{amount > 90} sales); 
-S2 := \project_{eid} (\select_{amount > 100} sales); 
+S2 := \project_{eid} (\select_{amount > 100} sales);
 S1 \difference S2;
 
 ===============================================================================
