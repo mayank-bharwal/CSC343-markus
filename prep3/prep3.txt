@@ -29,9 +29,7 @@
 [Q6] Write a query to report the name and eid of every employee who manages
      someone who has recorded sales over 50 on a single day.
 -------------------------------------------------------------------------------
-S := \select_{amount > 50} (sales); 
-M := manages \natural_join_{manages.junior = S.eid} S; 
-\project_{name, eid} (employee \natural_join_{employee.eid = M.manager} M);
+\project_{name, eid} (employee \natural_join_{employee.eid = manages.manager} (manages \natural_join_{manages.junior = sales.eid} (\select_{amount > 50} sales)));
 
 ===============================================================================
 [Q7] Write a query to report the eid of everyone who has had a day with sales
