@@ -23,7 +23,7 @@
 [Q5] Write a query to report the name, eid and salary of every employee who
      works in the department whose name is Widgets.
 -------------------------------------------------------------------------------
-\project_{name, eid, salary} (employee \natural_join (\select_{name='Widgets'} department));
+\project_{name, eid, salary} (employee \theta_join_{employee.dept = department.did} (\select_{name='Widgets'} department));
 
 ===============================================================================
 [Q6] Write a query to report the name and eid of every employee who manages
