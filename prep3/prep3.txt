@@ -1,41 +1,44 @@
 ===============================================================================
 [Q1] Write a query to report every department name.
 -------------------------------------------------------------------------------
-
+\project_{name} department;
 
 ===============================================================================
 [Q2] Write a query to report the name and eid of every employee whose salary
      is more than 55.
 -------------------------------------------------------------------------------
-
+\project_{name, eid} (\select_{salary>'55'} employee);
 
 ===============================================================================
 [Q3] Write a query to report the name and eid of every employee who has
      recorded at least one sales amount.
 -------------------------------------------------------------------------------
-
+\project_{name, eid} (employee \natural_join sales);
 
 ===============================================================================
 [Q4] Write a query to report the name and salary of every manager.
--------------------------------------------------------------------------------
-
+\project_{name, salary} (employee \natural_join_{employee.eid = manages.manager} manages);
 
 ===============================================================================
 [Q5] Write a query to report the name, eid and salary of every employee who
      works in the department whose name is Widgets.
 -------------------------------------------------------------------------------
-
+\project_{name, eid, salary} (employee \natural_join (\select_{name='Widgets'} department));
 
 ===============================================================================
 [Q6] Write a query to report the name and eid of every employee who manages
      someone who has recorded sales over 50 on a single day.
 -------------------------------------------------------------------------------
-
+S := \select_{amount > 50} (sales); 
+M := manages \natural_join_{manages.junior = S.eid} S; 
+\project_{name, eid} (employee \natural_join_{employee.eid = M.manager} M);
 
 ===============================================================================
 [Q7] Write a query to report the eid of everyone who has had a day with sales
      valued at over 90, but has never had a day with sales valued at over 100.
 -------------------------------------------------------------------------------
-
+S1 := \project_{eid} (\select_{amount > 90} sales); 
+S2 := \project_{eid} (\select_{amount > 100} sales); 
+S1 \difference S2;
 
 ===============================================================================
