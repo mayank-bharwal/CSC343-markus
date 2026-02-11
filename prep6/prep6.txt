@@ -10,7 +10,14 @@
      in a HAVING clause. And remember that you must use single quotes on your
      strings in SQL.
 -------------------------------------------------------------------------------
-
+SELECT countrycode AS code, COUNT(*) AS numlanguages
+FROM countrylanguage
+GROUP BY countrycode
+HAVING COUNT(*) > (
+    SELECT COUNT(*)
+    FROM countrylanguage
+    WHERE countrycode = 'MEX'
+);
 
 ===============================================================================
 [Q2] Find all countries where 'English' is the most commonly spoken language 
@@ -27,7 +34,15 @@
      whether it's >= the percentage for all the other languages spoken there.
 
 -------------------------------------------------------------------------------
-
+SELECT DISTINCT c.name AS country
+FROM country c
+JOIN countrylanguage cl1 ON c.code = cl1.countrycode
+WHERE cl1.countrylanguage = 'English'
+  AND cl1.percentage >= ALL (
+    SELECT cl2.percentage
+    FROM countrylanguage cl2
+    WHERE cl2.countrycode = cl1.countrycode
+);
 
 ===============================================================================
 [Q3] Find all countries in Africa that have a language spoken by fewer 
@@ -38,6 +53,14 @@
      Hint: Go through all the countries in Africa and use EXISTS to check 
      the other condition.
 -------------------------------------------------------------------------------
-
+SELECT name
+FROM country c
+WHERE continent = 'Africa'
+  AND EXISTS (
+    SELECT *
+    FROM countrylanguage cl
+    WHERE cl.countrycode = c.code
+      AND cl.percentage < 1
+);
 
 ===============================================================================
